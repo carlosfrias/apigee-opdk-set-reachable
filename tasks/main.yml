@@ -10,12 +10,12 @@
 - name: Set uuid if router
   set_fact:
     uuid: '{{ edge_router_self.uUID }}'
-  when: edge_router_self is defined
+  when: edge_router_self is defined and server_type == 'router'
 
 - name: Set uuid if message processor
   set_fact:
     uuid: '{{ edge_mp_self.uUID }}'
-  when: edge_mp_self is defined
+  when: edge_mp_self is defined and server_type == 'mp'
 
 - name: Set reachability to false if set
   ignore_errors: yes
