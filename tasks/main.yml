@@ -1,16 +1,9 @@
 ---
 # tasks file for opdk-set-reachable
-- name: Check for router server self report
+- name: Check for {{ server_type }} self report
   ignore_errors: yes
   opdk_server_self:
-    server_type: 'router'
-    username: '{{ opdk_user_email }}'
-    password: '{{ opdk_user_pass }}'
-
-- name: Check for message processor server self report
-  ignore_errors: yes
-  opdk_server_self:
-    server_type: 'mp'
+    server_type: '{{ server_type }}'
     username: '{{ opdk_user_email }}'
     password: '{{ opdk_user_pass }}'
 
@@ -30,6 +23,6 @@
     user: '{{ opdk_user_email }}'
     password: '{{ opdk_user_pass }}'
     method: POST
-    url: http://{{ local_mgmt_ip }}:{{ ms_ext_mgmt_port }}/v1/servers/{{ uuid }}
+    url: http://{{ public_mgmt_ip }}:{{ ms_ext_mgmt_port }}/v1/servers/{{ uuid }}
     body: reachable={{ reachable }}
   when: uuid is defined
