@@ -1,7 +1,6 @@
 ---
 # tasks file for opdk-set-reachable
 - name: Check for {{ server_type }} self report
-  ignore_errors: yes
   opdk_server_self:
     server_type: '{{ server_type }}'
     username: '{{ opdk_user_email }}'
@@ -17,8 +16,7 @@
     uuid: '{{ edge_mp_self.uUID }}'
   when: edge_mp_self is defined and server_type == 'mp'
 
-- name: Set reachability to false if set
-  ignore_errors: yes
+- name: Set reachability to {{ reachable }} if set
   uri:
     user: '{{ opdk_user_email }}'
     password: '{{ opdk_user_pass }}'
