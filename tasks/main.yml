@@ -22,7 +22,7 @@
       user: '{{ opdk_user_email }}'
       password: '{{ opdk_user_pass }}'
       method: POST
-      body_format: json
+      body_format: raw
       url: "http://{{ public_mgmt_ip }}:{{ ms_ext_mgmt_port }}/v1/servers/{{ uuid }}"
       body:
         reachable: '{{ reachable }}'
@@ -32,7 +32,7 @@
         user: '{{ opdk_user_email }}'
         password: '{{ opdk_user_pass }}'
         method: POST
-        body_format: json
+        body_format: raw
         url: "http://{{ local_mgmt_ip }}:{{ ms_ext_mgmt_port }}/v1/servers/{{ uuid }}"
         body:
           reachable: '{{ reachable }}'
