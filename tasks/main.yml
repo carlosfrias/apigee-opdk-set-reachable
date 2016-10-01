@@ -17,7 +17,6 @@
   when: edge_mp_self is defined and server_type == 'mp'
 
 - block:
-
   - name: Set reachability to {{ reachable }} if set
     uri:
       user: '{{ opdk_user_email }}'
@@ -28,9 +27,8 @@
       url: "http://{{ public_mgmt_ip }}:{{ ms_ext_mgmt_port }}/v1/servers/{{ uuid }}"
       body:
         reachable: '{{ reachable }}'
-
   rescue:
-
+    - name: Set reachability to {{ reachable }} if set
     uri:
       user: '{{ opdk_user_email }}'
       password: '{{ opdk_user_pass }}'
@@ -40,5 +38,4 @@
       url: "http://{{ local_mgmt_ip }}:{{ ms_ext_mgmt_port }}/v1/servers/{{ uuid }}"
       body:
         reachable: '{{ reachable }}'
-
   when: uuid is defined
