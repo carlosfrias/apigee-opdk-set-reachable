@@ -23,7 +23,6 @@
       password: '{{ opdk_user_pass }}'
       method: POST
       body_format: json
-      force_basic_auth: yes
       url: "http://{{ public_mgmt_ip }}:{{ ms_ext_mgmt_port }}/v1/servers/{{ uuid }}"
       body:
         reachable: '{{ reachable }}'
@@ -34,7 +33,6 @@
         password: '{{ opdk_user_pass }}'
         method: POST
         body_format: json
-        force_basic_auth: yes
         url: "http://{{ local_mgmt_ip }}:{{ ms_ext_mgmt_port }}/v1/servers/{{ uuid }}"
         body:
           reachable: '{{ reachable }}'
