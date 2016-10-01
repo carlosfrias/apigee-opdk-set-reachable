@@ -17,7 +17,6 @@
   when: edge_mp_self is defined and server_type == 'mp'
 
 - name: Set reachability to {{ reachable }} if set
-  ignore_errors: yes
   uri:
     user: '{{ opdk_user_email }}'
     password: '{{ opdk_user_pass }}'
