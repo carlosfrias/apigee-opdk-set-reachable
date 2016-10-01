@@ -30,6 +30,7 @@
         reachable: '{{ reachable }}'
 
   rescue:
+
     uri:
       user: '{{ opdk_user_email }}'
       password: '{{ opdk_user_pass }}'
@@ -40,4 +41,4 @@
       body:
         reachable: '{{ reachable }}'
 
-    when: uuid is defined
+  when: uuid is defined
