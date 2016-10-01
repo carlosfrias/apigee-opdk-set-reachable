@@ -21,6 +21,7 @@
     user: '{{ opdk_user_email }}'
     password: '{{ opdk_user_pass }}'
     method: POST
+    status_code: 200
     body_format: json
     url: http://{{ public_mgmt_ip }}:{{ ms_ext_mgmt_port }}/v1/servers/{{ uuid }}
     body: "{ reachable: {{ reachable }}"
