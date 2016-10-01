@@ -23,6 +23,7 @@
     method: POST
     status_code: 200
     return_content: no
+    body_format: raw
     url: http://{{ public_mgmt_ip }}:{{ ms_ext_mgmt_port }}/v1/servers/{{ uuid }}
     body: 'reachable={{ reachable }}'
     HEADER_Content-type: 'application/x-www-form-urlencoded'
