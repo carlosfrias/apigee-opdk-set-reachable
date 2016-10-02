@@ -50,4 +50,4 @@
           body: 'reachable={{ reachable }}'
     when: uuid is defined
 
-    when: self_status
+  when: self_status
