@@ -1,37 +1,44 @@
 ---
 # tasks file for opdk-set-reachable
+#- name: Check for running server
+#
 - name: Check for {{ server_type }} self report
+  ignore_errors: yes
   opdk_server_self:
     server_type: '{{ server_type }}'
     username: '{{ opdk_user_email }}'
     password: '{{ opdk_user_pass }}'
-
-- name: Set uuid if router
-  set_fact:
-    uuid: '{{ edge_router_self.uUID }}'
-  when: edge_router_self is defined and server_type == 'router'
-
-- name: Set uuid if message processor
-  set_fact:
-    uuid: '{{ edge_mp_self.uUID }}'
-  when: edge_mp_self is defined and server_type == 'mp'
+  register: self_status
 
 - block:
-  - name: Use {{ public_mgmt_ip }} to set reachability to {{ reachable }} if set
-    uri:
-      user: '{{ opdk_user_email }}'
-      password: '{{ opdk_user_pass }}'
-      method: POST
-      body_format: raw
-      url: "http://{{ public_mgmt_ip }}:{{ ms_ext_mgmt_port }}/v1/servers/{{ uuid }}"
-      body: reachable={{ reachable }}
-  rescue:
-    - name: Use {{ local_mgmt_ip }} to set reachability to {{ reachable }} if set
+  - name: Set uuid if router
+    set_fact:
+      uuid: '{{ edge_router_self.uUID }}'
+    when: edge_router_self is defined and server_type == 'router'
+
+  - name: Set uuid if message processor
+    set_fact:
+      uuid: '{{ edge_mp_self.uUID }}'
+    when: edge_mp_self is defined and server_type == 'mp'
+
+  - block:
+    - name: Use {{ public_mgmt_ip }} to set reachability to {{ reachable }} if set
       uri:
         user: '{{ opdk_user_email }}'
         password: '{{ opdk_user_pass }}'
         method: POST
         body_format: raw
-        url: "http://{{ local_mgmt_ip }}:{{ ms_ext_mgmt_port }}/v1/servers/{{ uuid }}"
-        body: 'reachable={{ reachable }}'
-  when: uuid is defined
+        url: "http://{{ public_mgmt_ip }}:{{ ms_ext_mgmt_port }}/v1/servers/{{ uuid }}"
+        body: reachable={{ reachable }}
+    rescue:
+      - name: Use {{ local_mgmt_ip }} to set reachability to {{ reachable }} if set
+        uri:
+          user: '{{ opdk_user_email }}'
+          password: '{{ opdk_user_pass }}'
+          method: POST
+          body_format: raw
+          url: "http://{{ local_mgmt_ip }}:{{ ms_ext_mgmt_port }}/v1/servers/{{ uuid }}"
+          body: 'reachable={{ reachable }}'
+    when: uuid is defined
+
+    when: self_status | success
