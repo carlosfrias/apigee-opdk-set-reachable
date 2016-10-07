@@ -31,7 +31,7 @@
     when: edge_mp_self is defined and server_type == 'mp'
 
   - block:
-    - name: Use {{ public_mgmt_ip }} to set reachability to {{ reachable }} if set
+    - name: Use public: {{ public_mgmt_ip }} to set reachability to {{ reachable }} if set
       uri:
         user: '{{ opdk_user_email }}'
         password: '{{ opdk_user_pass }}'
@@ -40,7 +40,7 @@
         url: "http://{{ public_mgmt_ip }}:{{ ms_ext_mgmt_port }}/v1/servers/{{ uuid }}"
         body: reachable={{ reachable }}
     rescue:
-      - name: Use {{ local_mgmt_ip }} to set reachability to {{ reachable }} if set
+      - name: Use local: {{ local_mgmt_ip }} to set reachability to {{ reachable }} if set
         uri:
           user: '{{ opdk_user_email }}'
           password: '{{ opdk_user_pass }}'
