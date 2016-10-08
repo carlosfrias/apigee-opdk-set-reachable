@@ -1,5 +1,5 @@
 ---
-# tasks file for opdk-set-reachable
+# tasks file for apigee-opdk-set-reachable
 #- name: Check for running server
 - block:
   - name: Check for {{ server_type }} self report
