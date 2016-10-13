@@ -18,6 +18,10 @@
     set_fact:
       self_status: false
 
+- name: Persist reachability setting
+  cache:
+    key: 'reachability'
+    value: '{{ reachability }}'
 
 - block:
   - name: Set uuid if router
