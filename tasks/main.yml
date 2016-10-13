@@ -18,6 +18,11 @@
     set_fact:
       self_status: false
 
+- name: Persist server_type setting
+  cache:
+    key: 'server_type'
+    value: '{{ server_type }}'
+
 - name: Persist reachability setting
   cache:
     key: 'reachability'
