@@ -1,7 +1,7 @@
-Role Name
-=========
+Apigee OPDK Set Reachable
+=========================
 
-A brief description of the role goes here.
+The purpose of this role is to set the reachability flag on either routers or message processors. 
 
 Requirements
 ------------
