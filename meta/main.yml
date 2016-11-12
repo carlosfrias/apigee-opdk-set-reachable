@@ -14,3 +14,4 @@ galaxy_info:
   - opdk
 dependencies:
 - { role: apigee-opdk-setup-default-settings }
+- apigee-opdk-server-self
