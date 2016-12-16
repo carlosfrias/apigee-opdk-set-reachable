@@ -40,23 +40,23 @@
     when: edge_mp_self is defined and server_type == 'mp'
 
   - block:
-    - name: Use public {{ public_mgmt_ip }} to set reachability to {{ reachable }} if set
+    - name: Use public {{ public_mgmt_ip }} to set reachability to {{ reachability }} if set
       uri:
         user: '{{ opdk_user_email }}'
         password: '{{ opdk_user_pass }}'
         method: POST
         body_format: raw
         url: "http://{{ public_mgmt_ip }}:{{ ms_ext_mgmt_port }}/v1/servers/{{ uuid }}"
-        body: reachable={{ reachable }}
+        body: reachable={{ reachability }}
     rescue:
-      - name: Use local {{ local_mgmt_ip }} to set reachability to {{ reachable }} if set
+      - name: Use local {{ local_mgmt_ip }} to set reachability to {{ reachability }} if set
         uri:
           user: '{{ opdk_user_email }}'
           password: '{{ opdk_user_pass }}'
           method: POST
           body_format: raw
           url: "http://{{ local_mgmt_ip }}:{{ ms_ext_mgmt_port }}/v1/servers/{{ uuid }}"
-          body: 'reachable={{ reachable }}'
+          body: reachable={{ reachability }}
     when: uuid is defined
 
   when: self_status
