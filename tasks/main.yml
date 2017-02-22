@@ -1,6 +1,11 @@
 ---
 # tasks file for apigee-opdk-set-reachable
 #- name: Check for running server
+- name: Validate that server_type was provided
+  fail:
+    msg: "Please provide the server_type"
+  when: server_type is not defined
+
 - block:
   - name: Check for {{ server_type }} self report
     opdk_server_self:
