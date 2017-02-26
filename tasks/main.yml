@@ -5,6 +5,10 @@
     msg: "Please provide the server_types"
   when: server_types is not defined
 
+- name: Display server_types list
+  debug:
+    var: server_types
+
 - block:
   - name: Check for {{ server_type }} self report
     opdk_server_self:
