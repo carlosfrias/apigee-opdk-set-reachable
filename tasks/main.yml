@@ -1,73 +1,26 @@
 ---
 # tasks file for apigee-opdk-set-reachable can handle server type collections
-- name: Validate that server_types was provided
+- name: Validate that reachability has been provided
   fail:
-    msg: "Please provide the server_types"
-  when: server_types is not defined
+    msg: "Please provide the reachability to set"
+  when: reachability is not defined
 
-- name: Display server_types list
-  debug:
-    var: server_types
+- name: Set uuid if router
+  set_fact:
+    uuid: '{{ edge_router_self.uUID }}'
+  when: edge_router_self is defined
 
-- pause:
+- name: Set uuid if message processor
+  set_fact:
+    uuid: '{{ edge_mp_self.uUID }}'
+  when: edge_mp_self is defined
 
-- block:
-  - name: Check for {{ server_type }} self report
-    opdk_server_self:
-      server_type: '{{ item }}'
-      username: '{{ opdk_user_email }}'
-      password: '{{ opdk_user_pass }}'
-    with_items: '{{ server_types }}'
-
-  - name: Set success
-    set_fact:
-      self_status: true
-
-  rescue:
-
-  - name: Set success
-    set_fact:
-      self_status: false
-
-- name: Persist server_type setting
-  cache:
-    key: 'server_type'
-    value: '{{ server_type }}'
-
-- name: Persist reachability setting
-  cache:
-    key: 'reachability'
-    value: '{{ reachability }}'
-
-- block:
-  - name: Set uuid if router
-    set_fact:
-      uuid: '{{ edge_router_self.uUID }}'
-    when: edge_router_self is defined and server_type == 'router'
-
-  - name: Set uuid if message processor
-    set_fact:
-      uuid: '{{ edge_mp_self.uUID }}'
-    when: edge_mp_self is defined and server_type == 'mp'
-
-#  - block:
-#    - name: Use public {{ public_mgmt_ip }} to set reachability to {{ reachability }} if set
-#      uri:
-#        user: '{{ opdk_user_email }}'
-#        password: '{{ opdk_user_pass }}'
-#        method: POST
-#        body_format: raw
-#        url: "http://{{ public_mgmt_ip }}:{{ ms_ext_mgmt_port }}/v1/servers/{{ uuid }}"
-#        body: reachable={{ reachability }}
-#    rescue:
-  - name: Use local {{ local_mgmt_ip }} to set reachability to {{ reachability }} if set
-    uri:
-      user: '{{ opdk_user_email }}'
-      password: '{{ opdk_user_pass }}'
-      method: POST
-      body_format: raw
-      url: "http://{{ local_mgmt_ip }}:{{ ms_ext_mgmt_port }}/v1/servers/{{ uuid }}"
-      body: reachable={{ reachability }}
-    when: uuid is defined
-
-  when: self_status
+- name: Use local {{ local_mgmt_ip }} to set reachability to {{ reachability }} if set
+  uri:
+    user: '{{ opdk_user_email }}'
+    password: '{{ opdk_user_pass }}'
+    method: POST
+    body_format: raw
+    url: "http://{{ local_mgmt_ip }}:{{ ms_ext_mgmt_port }}/v1/servers/{{ uuid }}"
+    body: reachable={{ reachability }}
+  when: uuid is defined
