@@ -1,5 +1,5 @@
 ---
-# tasks file for apigee-opdk-set-reachable
+# tasks file for apigee-opdk-set-reachable can handle server type collections
 - name: Validate that server_types was provided
   fail:
     msg: "Please provide the server_types"
