@@ -9,6 +9,8 @@
   debug:
     var: server_types
 
+- pause:
+
 - block:
   - name: Check for {{ server_type }} self report
     opdk_server_self:
