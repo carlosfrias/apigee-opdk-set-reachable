@@ -15,6 +15,16 @@
     uuid: '{{ edge_mp_self.uUID }}'
   when: edge_mp_self is defined
 
+- name: Set uuid if qpid server
+  set_fact:
+    uuid: '{{ edge_qs_self.uUID }}'
+  when: edge_qs_self is defined
+
+- name: Set uuid if postgres server
+  set_fact:
+    uuid: '{{ edge_ps_self.uUID }}'
+  when: edge_ps_self is defined
+
 - name: Use local {{ local_mgmt_ip }} to set reachability to {{ reachability }} if set
   uri:
     user: '{{ opdk_user_email }}'
