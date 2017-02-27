@@ -8,22 +8,22 @@
 - name: Set uuid if router
   set_fact:
     uuid: '{{ edge_router_self.uUID }}'
-  when: edge_router_self is defined
+  when: edge_router_self is defined and 'router' in server_types
 
 - name: Set uuid if message processor
   set_fact:
     uuid: '{{ edge_mp_self.uUID }}'
-  when: edge_mp_self is defined
+  when: edge_mp_self is defined and 'mp' in server_types
 
 - name: Set uuid if qpid server
   set_fact:
     uuid: '{{ edge_qs_self.uUID }}'
-  when: edge_qs_self is defined
+  when: edge_qs_self is defined and 'qs' in server_types
 
 - name: Set uuid if postgres server
   set_fact:
     uuid: '{{ edge_ps_self.uUID }}'
-  when: edge_ps_self is defined
+  when: edge_ps_self is defined and 'ps' in server_types
 
 - name: Use local {{ local_mgmt_ip }} to set reachability to {{ reachability }} if set
   uri:
