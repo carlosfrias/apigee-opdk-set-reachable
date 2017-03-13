@@ -37,4 +37,4 @@
 
 - name: Allow calls in flight to complete
   pause:
-    seconds: "{{ reachability_delay }}"
+    seconds: "{{ reachability_delay | default(0) }}"
