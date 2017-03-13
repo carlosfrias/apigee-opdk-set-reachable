@@ -34,3 +34,7 @@
     url: "http://{{ local_mgmt_ip }}:{{ ms_ext_mgmt_port }}/v1/servers/{{ uuid }}"
     body: reachable={{ reachability }}
   when: uuid is defined
+
+- name: Allow calls in flight to complete
+  pause:
+    seconds: "{{ reachability_delay }}"
