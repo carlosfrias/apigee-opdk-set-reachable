@@ -36,5 +36,6 @@
   when: uuid is defined
 
 - name: Allow calls in flight to complete
-  pause:
-    seconds: "{{ reachability_delay | default(0) }}"
+  become: no
+  local_action: wait_for host='{{ ansible_host }}' state=started delay={{ reachability_delay | d(0) }}'
+  when: reachability_delay is defined
