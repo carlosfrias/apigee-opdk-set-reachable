@@ -28,7 +28,7 @@
 - name: Fail if uuid is not set
   fail:
     msg: "No uUID available, please make sure that server is running"
-  when: uuid: is not defined
+  when: uuid is not defined
 
 - name: Use local {{ local_mgmt_ip }} to set reachability to {{ reachability }} if set
   uri:
